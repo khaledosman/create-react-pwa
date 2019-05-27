@@ -1,61 +1,54 @@
-import React, { PureComponent } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
+
 let openSnackbarFn
 let closeSnackbarFn
-export class Notifier extends PureComponent {
-  state = {
-    open: false,
-    message: '',
-    action: null
-  };
-
-  componentDidMount () {
-    openSnackbarFn = this.openSnackbar
-    closeSnackbarFn = this.closeSnackbar
-  }
-
-  closeSnackbar = () => {
-    this.setState({ open: false })
-  }
-
-  openSnackbar = ({ message, action }) => {
-    this.setState({
-      open: true,
-      message,
-      action
-    })
-  };
-
-  handleSnackbarClose = () => {
-    this.setState({
-      open: false,
-      message: ''
-    })
-  };
-
-  render () {
-    const message = (
-      <span
-        id='snackbar-message-id'
-        dangerouslySetInnerHTML={{ __html: this.state.message }}
-      />
-    )
-
-    return (
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        message={message}
-        action={this.state.action}
-        autoHideDuration={20000}
-        onClose={this.handleSnackbarClose}
-        open={this.state.open}
-        SnackbarContentProps={{
-          'aria-describedby': 'snackbar-message-id'
-        }}
-      />
-    )
-  }
+const snackbarContentProps = {
+  'aria-describedby': 'snackbar-message-id'
 }
+
+const anchorOrigin = { vertical: 'top', horizontal: 'right' }
+
+export const Notifier = React.memo(function Notifier (props) {
+  const [open, setOpen] = useState(false)
+  const [message, setMessage] = useState('')
+  const [action, setAction] = useState(null)
+
+  const _closeSnackbar = () => {
+    setOpen(false)
+  }
+
+  const _openSnackbar = ({ message, action }) => {
+    setOpen(true)
+    setMessage(message)
+    setAction(action)
+  }
+
+  useEffect(() => {
+    openSnackbarFn = _openSnackbar
+    closeSnackbarFn = _closeSnackbar
+  }, [])
+
+  const handleSnackbarClose = () => {
+    setOpen(false)
+    setMessage('')
+  }
+
+  return (
+    <Snackbar
+      anchorOrigin={anchorOrigin}
+      message={<span
+        id='snackbar-message-id'
+        dangerouslySetInnerHTML={{ __html: message }}
+      />}
+      action={action}
+      autoHideDuration={20000}
+      onClose={useCallback(handleSnackbarClose)}
+      open={open}
+      SnackbarContentProps={snackbarContentProps}
+    />
+  )
+})
 
 export function openSnackbar ({ message, action }) {
   openSnackbarFn({ message, action })
