@@ -49,11 +49,11 @@ function isTokenValid () {
     const authInfo = window.localStorage.getItem('authInfo')
     const token = window.localStorage.getItem('token')
     if (token && authInfo) {
-      const { access_token, createdAt, expiresIn } = JSON.parse(authInfo)
+      const { access_token: accessToken, createdAt, expiresIn } = JSON.parse(authInfo)
       if (Date.now() >= new Date(createdAt).getTime() + ms(expiresIn)) {
         reject(new Error('token expired'))
       } else {
-        resolve(access_token)
+        resolve(accessToken)
       }
     } else {
       reject(new Error('no token found'))
