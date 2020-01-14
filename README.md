@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 # create-react-pwa
-create-react-app with enhanced pwa capabilities
+create-react-app bootstrapped project with enhanced pwa capabilities
 
 A newly generated create-react-app app that
 
