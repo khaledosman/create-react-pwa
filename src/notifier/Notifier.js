@@ -14,25 +14,25 @@ export const Notifier = React.memo(function Notifier (props) {
   const [message, setMessage] = useState('')
   const [action, setAction] = useState(null)
 
-  const _closeSnackbar = () => {
+  const _closeSnackbar = useCallback(() => {
     setOpen(false)
-  }
+  },[])
 
-  const _openSnackbar = ({ message, action }) => {
+  const _openSnackbar = useCallback(({ message, action }) => {
     setOpen(true)
     setMessage(message)
     setAction(action)
-  }
+  }, [])
 
   useEffect(() => {
     openSnackbarFn = _openSnackbar
     closeSnackbarFn = _closeSnackbar
-  }, [])
+  }, [_openSnackbar, _closeSnackbar])
 
-  const handleSnackbarClose = () => {
+  const handleSnackbarClose = useCallback(() => {
     setOpen(false)
     setMessage('')
-  }
+  }, [])
 
   return (
     <Snackbar
@@ -43,7 +43,7 @@ export const Notifier = React.memo(function Notifier (props) {
       />}
       action={action}
       autoHideDuration={20000}
-      onClose={useCallback(handleSnackbarClose)}
+      onClose={handleSnackbarClose}
       open={open}
       SnackbarContentProps={snackbarContentProps}
     />
