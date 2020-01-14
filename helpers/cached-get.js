@@ -11,7 +11,7 @@ function cachedGet (url, config, { cacheKey = url, isOnlineFirst = false, dontSh
         if (!error.response) {
           // Network error
           if (!dontShowErrorMessage && error.message !== 'No cached response found' && error.message !== 'no token found' && error.message !== 'token expired') {
-            showErrorMessage({ message: `Couldn't complete request, please try again later` })
+            showErrorMessage({ message: 'Couldn\'t complete request, please try again later' })
           }
           return getFromCache(url, config, cacheKey)
         } else {
@@ -32,7 +32,7 @@ function cachedGet (url, config, { cacheKey = url, isOnlineFirst = false, dontSh
             // Network error
 
             if (!dontShowErrorMessage) {
-              showErrorMessage({ message: `Couldn't complete request, please try again later` })
+              showErrorMessage({ message: 'Couldn\'t complete request, please try again later' })
             }
           }
           return getFromNetworkAndSaveToCache(url, config)
