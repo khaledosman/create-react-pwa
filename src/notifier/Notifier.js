@@ -16,7 +16,7 @@ export const Notifier = React.memo(function Notifier (props) {
 
   const _closeSnackbar = useCallback(() => {
     setOpen(false)
-  },[])
+  }, [])
 
   const _openSnackbar = useCallback(({ message, action }) => {
     setOpen(true)
