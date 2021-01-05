@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "ms": "^2.1.2",
     "react": "0.0.0-experimental-94c0244ba",
     "react-dom": "0.0.0-experimental-94c0244ba",
